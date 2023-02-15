@@ -1,8 +1,10 @@
+import os
 import torch
 
 from anomaly_detector.model.auto_encoder import AE
 from anomaly_detector.model.dataset import LogDataset
 from anomaly_detector.database.data_loader import DataLoader
+from anomaly_detector.utils.utility import get_root_path
 
 def get_data_loader(batch_size):
     data_loader = DataLoader()
@@ -18,6 +20,7 @@ def train():
     
     #  use gpu if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print("Using device: ", device)
 
     data_loader = get_data_loader(batch_size)
     model = AE().to(device)
@@ -34,8 +37,12 @@ def train():
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            print("loss: ", loss.item())
         # ===================log========================
         print('epoch [{}/{}], loss:{:.4f}'.format(epoch + 1, num_epochs, loss.item()))
+        # ===================save========================
+        torch.save(model.state_dict(), os.path.join(get_root_path(), "models", "model.pth"))
+        
         
 if __name__ == "__main__":
     train()
