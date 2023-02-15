@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: anomaly-detector
+Version: 0.1.0
+Author: Mico Bøje
+Requires-Python: >=3.9.0
+Provides-Extra: full
+Provides-Extra: install
+Provides-Extra: inference
+Provides-Extra: test

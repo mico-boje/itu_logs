@@ -1,0 +1,6 @@
+setup.py
+data_generator.egg-info/PKG-INFO
+data_generator.egg-info/SOURCES.txt
+data_generator.egg-info/dependency_links.txt
+data_generator.egg-info/requires.txt
+data_generator.egg-info/top_level.txt
