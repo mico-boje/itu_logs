@@ -41,7 +41,7 @@ def train():
         # ===================log========================
         print('epoch [{}/{}], loss:{:.4f}'.format(epoch + 1, num_epochs, loss.item()))
         # ===================save========================
-        torch.save(model.state_dict(), os.path.join(get_root_path(), "models", "model.pth"))
+        torch.save(model.state_dict(), os.path.join(get_root_path(), "anomaly_detector", "models", "model.pth"))
         
         
 if __name__ == "__main__":
