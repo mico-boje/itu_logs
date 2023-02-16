@@ -10,12 +10,14 @@ def get_data_loader(batch_size):
     data_loader = DataLoader()
     records = data_loader.get_all_records()
     data = [x.log_message for x in records]
+    #limit data to the first 80% of the data
+    data = data[:int(len(data) * 0.8)]
     dataset = LogDataset(data)
     return torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 def train():
     batch_size = 32
-    num_epochs = 100
+    num_epochs = 5
     learning_rate = 1e-3
     
     #  use gpu if available

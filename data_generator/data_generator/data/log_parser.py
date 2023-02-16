@@ -36,3 +36,7 @@ class LogParser():
                 return Logs(log_time=time, log_message=message)
         except UnicodeDecodeError as e:
             print("UnicodeDecodeError: ", e)
+            
+if __name__ == "__main__":
+    parser = LogParser()
+    parser()

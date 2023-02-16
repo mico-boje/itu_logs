@@ -4,6 +4,10 @@ from typing import Union
 from fastapi import FastAPI
 
 from data_generator.database.data_loader import DataLoader
+from data_generator.data.log_parser import LogParser
+
+log_parser = LogParser()
+log_parser()
 
 app = FastAPI()
 data_loader = DataLoader()

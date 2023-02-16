@@ -82,7 +82,6 @@ config.ini
 .ipynb_checkpoints/
 
 # exclude data from source control by default
-/data/
 
 # local files
 /local/
