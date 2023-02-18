@@ -19,7 +19,7 @@ Alternatively you can use the make command
 ```bash
 make compose_up
 ```
-
+Building the images can take a few minutes.
 ### Acessing the data generator
 By default the data generator listen on localhost:8000 <br>
 Swagger ui is provided on localhost:8000/docs

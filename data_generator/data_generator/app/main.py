@@ -6,12 +6,14 @@ from fastapi import FastAPI
 from data_generator.database.data_loader import DataLoader
 from data_generator.data.log_parser import LogParser
 
-log_parser = LogParser()
-log_parser()
 
 app = FastAPI()
 data_loader = DataLoader()
 ids = data_loader.get_ids()
+if len(ids) == 0:
+    log_parser = LogParser()
+    log_parser()
+    ids = data_loader.get_ids()
 
 @app.get("/health")
 def health():
