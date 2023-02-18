@@ -1,5 +1,18 @@
 version: '3.9'
 services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.9
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
   data_generator:
     build: 
       context: ../
@@ -12,16 +25,19 @@ services:
       - DATABASE_PASSWORD = "postgres"
     links:
       - postgresdb:db
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     depends_on:
       - postgresdb
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h db -p 5432 -U postgres -d postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -h db -p 5432 -U postgres -d postgres"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 10
     restart: always
+    labels:
+      - "traefik.http.routers.data_generator.rule=Host(`data_generator.docker.localhost`)"
+      - "traefik.http.services.data_generator.loadbalancer.server.port=8000"
 
   postgresdb:
     build: 
@@ -39,9 +55,11 @@ services:
     build:
       context: ../
       dockerfile: ./docker/anomaly_detector/Dockerfile
-    ports:
-      - "8001:8001"
-
+    # ports:
+    #   - "8001:8001"
+    labels:
+      - "traefik.http.routers.anomaly_detector.rule=Host(`anomaly_detector.docker.localhost`)"
+      - "traefik.http.services.anomaly_detector.loadbalancer.server.port=8001"
 
 
    
